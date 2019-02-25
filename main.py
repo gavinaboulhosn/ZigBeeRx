@@ -5,17 +5,15 @@ from ZigBeeRx.GUI import PortSelectGUI
 
 
 def init_controller():
-    port_select = PortSelectGUI()
-    port_select.display()
+    # port_select = PortSelectGUI()
+    # port_select.display()
     port = port_select.port
-    txcont = RxController(port)                         #'/dev/tty.usbserial-AD01SSNN'
+    txcont = RxController(port)                         # '/dev/tty.usbserial-AD01SSNN'
     txcont.connect()
     txcont.configure_remote()
     return txcont
 
-def init_message():
-    message = XBeePacket()
-    return message
+
 
 
 

@@ -3,6 +3,8 @@ from ZigBeeRx.ports import serial_ports
 from ZigBeeRx.xbeepacket import XBeePacket
 import pandas as pd
 import serial
+import ZigBeeRx.KML_Formatter as kml
+import ZigBeeRx.get_image as g_img
 
 
 class RxController:
@@ -57,7 +59,10 @@ class RxController:
 
     def receive_from(self):
         self.packet = XBeePacket(self.xbee.read_data_from(self.remote, self.timeout))
-        print(self.packet.data.decode("utf8"))
+        data = self.packet.data.decode("utf8").split(' ')
+        image = g_img.get_image(float(data[1]))
+        kml.kml_gen(i=float(data[0]), lon=data[3], lat=data[2], alt=data[4], icon=image)
+
 
     def configure_remote(self):
         if self.xbee.get_64bit_addr() == "0013A2004093DF98":
@@ -65,12 +70,10 @@ class RxController:
         else:
             self.remote = RemoteXBeeDevice(self.xbee, XBee64BitAddress.from_hex_string("0013A2004093DF98"))
 
-
     def to_csv(self):
         a = pd.ExcelWriter('../RxData.xlsx', engine='xlsxwriter')
         self.dataframe.to_excel(a, sheet_name='Sheet1')
         a.save()
-
 
     @staticmethod
     def list_ports():
