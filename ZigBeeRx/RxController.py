@@ -3,7 +3,7 @@ from ZigBeeRx.ports import serial_ports
 from ZigBeeRx.xbeepacket import XBeePacket
 import pandas as pd
 import serial
-import ZigBeeRx.KML_Formatter as kml
+import ZigBeeRx.KML_Formater as kml
 import ZigBeeRx.get_image as g_img
 
 
@@ -60,8 +60,11 @@ class RxController:
     def receive_from(self):
         self.packet = XBeePacket(self.xbee.read_data_from(self.remote, self.timeout))
         data = self.packet.data.decode("utf8").split(' ')
-        image = g_img.get_image(float(data[1]))
-        kml.kml_gen(i=float(data[0]), lon=data[3], lat=data[2], alt=data[4], icon=image)
+        if float(data[0]) == 0:
+            print('No data, but still connected. Try # ', data[-1])
+        else:
+            image = g_img.get_image(float(data[1]))
+            kml.kml_gen(i=float(data[0]), lon=data[3], lat=data[2], alt=(float(data[4])-117), icon=image)
 
 
     def configure_remote(self):

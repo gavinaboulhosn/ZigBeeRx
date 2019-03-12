@@ -1,4 +1,5 @@
 import os
+name = 'data.kml'
 
 
 def kml_name(newname):
@@ -8,6 +9,10 @@ def kml_name(newname):
 
 
 def kml_gen(i, lon, lat, alt=0, scale=1, icon='1'):
+
+
+    if float(lon) >0:
+        lon = str(float(lon)*-1)
 
     if icon == '1':
         icon = 'default.png'  # sets icon to default color when no path for a color graded icon is available.

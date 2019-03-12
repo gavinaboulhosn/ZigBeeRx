@@ -31,7 +31,7 @@ def get_image(rsrp_value):
     return picture_path
 
 
-def generate_color(val, minval=-70, maxval=-10, colors=COLORS):
+def generate_color(val, minval=-50, maxval=20, colors=COLORS):
     i_f = float(val-minval) / float(maxval-minval) * (len(colors)-1)
     i, f = int(i_f // 1), i_f % 1
     if f < EPSILON:

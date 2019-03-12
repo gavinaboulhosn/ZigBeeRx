@@ -2,7 +2,6 @@ import tkinter as tk
 from ZigBeeRx.ports import serial_ports
 from tkinter import ttk
 from tkinter import messagebox
-import threading
 
 
 class PortSelectGUI:
@@ -14,7 +13,6 @@ class PortSelectGUI:
         self.port_var = tk.StringVar(self.root)
         self.port = None
         self.save_var = tk.IntVar()
-
 
     def display(self):
         try:
@@ -38,12 +36,6 @@ class PortSelectGUI:
         self.root.destroy()
         if self.save_var:
             self.save_port()
-            print('here')
-
-    def thread_close(self):
-        self.thread = threading.Thread(target=self.choose_port())
-        self.thread.start()
-        return
 
     def save_port(self):
         import os

@@ -1,7 +1,5 @@
-import pandas as pd
-from threading import Timer
 from digi.xbee.devices import XBeeMessage
-import sys
+
 
 class XBeePacket:
     def __init__(self, packet: XBeeMessage, csv_file='../RxData.csv'):
@@ -13,16 +11,3 @@ class XBeePacket:
 
     def to_dict(self):
         return self.packet.to_dict()
-
-
-
-
-
-
-
-
-
-
-
-
-
